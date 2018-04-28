@@ -73,6 +73,8 @@
 <br> dithering on "flower.bmp" (resulting images not in original resolution)
 <br> <img src="./imgs/dither.png">
 <br> same table as above, but with the images at their original resolution
+<br> from top to bottom: quantize, random dither, floyd-steinberg dither
+<br> from left to right: nbits = 1, 2, 3, 4, 5
 <div class="row"> 
   <div class="column">
     <img src="./imgs/flowerd1.bmp">
@@ -81,4 +83,96 @@
     <img src="./imgs/flowerd4.bmp">
     <img src="./imgs/flowerd5.bmp">
   </div>
+  <div class="column">
+    <img src="./imgs/flowerrd1.bmp">
+    <img src="./imgs/flowerrd2.bmp">
+    <img src="./imgs/flowerrd3.bmp">
+    <img src="./imgs/flowerrd4.bmp">
+    <img src="./imgs/flowerrd5.bmp">
+  </div>
+  <div class="column">
+    <img src="./imgs/flowerfs1.bmp">
+    <img src="./imgs/flowerfs2.bmp">
+    <img src="./imgs/flowerfs3.bmp">
+    <img src="./imgs/flowerfs4.bmp">
+    <img src="./imgs/flowerfs5.bmp">
+  </div>  
 </div>
+<br> for edge pixels in floyd-steinberg dither, we implemented the method of using 
+only valid pixels. in other words, if a pixel is on the right edge of the image, then
+we will only use the bottom left and bottom pixel values when distributing error.
+
+<p> <b> 3.4.1 blur </b> 
+<br> for edge pixels in convolution, we use mirrored pixels. in other words, if 
+the pixel is on the left edge, then we will use the right pixel in place of the left 
+pixel.
+<br> blur on "mandrill.bmp" (resulting images not in original resolution)
+<br> <img src="./imgs/blur.png">
+<br> blur on "flower.bmp" (resulting images not in original resolution)
+<br> from left to right, kernel width = original, 3, 5, 7, 11, 19
+<div class="column">
+  <img src="./imgs/flower.bmp">
+  <img src="./imgs/flowerblur3.bmp">
+  <img src="./imgs/flowerblur5.bmp">
+  <img src="./imgs/flowerblur7.bmp">
+  <img src="./imgs/flowerblur11.bmp">
+  <img src="./imgs/flowerblur19.bmp">
+</div>  
+
+<p> <b> 3.4.2 sharpen </b>
+<br> sharpening hippo (top = original, bottom = sharpened)
+<br> <img src="./imgs/popblur.bmp">
+<br> <img src="./imgs/popsharpen.bmp">
+<br> sharpening "flower.bmp" (top = original, bottom = sharpened)
+<br> <img src="./imgs/flower.bmp">
+<br> <img src="./imgs/flowersharp.bmp">
+
+<p> <b> 3.4.3 edge detection </b>
+<br> edge detect checkerboard
+<br> <img src="./imgs/checkerboard2.bmp">
+<br> <img src="./imgs/checkerboardedge.bmp">
+<br> edge detect wave
+<br> <img src="./imgs/wave.bmp">
+<br> <img src="./imgs/waveedge.bmp">
+
+<p> <b> 3.5.1 scale </b>
+<br> original
+<br> <img src="./imgs/checkerboard.bmp">
+<br> scaled to 300x300 (minimize)
+<br> from left to right: nearest neighbor, hat, mitchell
+<br> - as you can see, our mitchell function did not work as expected. we implemented
+mitchell by using the same method as hat, except we replaced the hat function with 
+the mitchell function. we also accounted for the differences in width between
+hat and mitchell. however, the image generated is not the intended result and 
+we don't know why.
+<br><img src="./imgs/checkerboard3000.bmp">
+<img src="./imgs/checkerboard3001.bmp">
+<img src="./imgs/checkerboard3002.bmp">
+<br> scaled to 250x1000 (minimize x, magnify y)
+<br> from left to right: nearest neighbor, hat, mitchell
+<br><img src="./imgs/checkerboard2500.bmp">
+<img src="./imgs/checkerboard2501.bmp">
+<img src="./imgs/checkerboard2502.bmp">
+<br> scaled to 1000x1000 (magnify)
+<br> from top to bottom: nearest neighbor, hat, mitchell
+<br><img src="./imgs/checkerboard10000.bmp">
+<br><img src="./imgs/checkerboard10001.bmp">
+<br><img src="./imgs/checkerboard10002.bmp">
+
+<p> <b> 3.5.1 shift </b>
+<br>from top to bottom, left to right: 
+<br> original, nearest neighbor
+<br> hat, mitchell
+<br> shifted 10.5 pixels right
+<br><img src="./imgs/checkerboard.bmp">
+<img src="./imgs/checkerboardshiftx0.bmp">
+<br><img src="./imgs/checkerboardshiftx1.bmp">
+<img src="./imgs/checkerboardshiftx2.bmp">
+
+<p> <b> 3.6 fun filter </b>
+<br> for fun, we implemented a simple rotation that will always rotate an image
+50 degrees counterclockwise.
+<br> <img src="./imgs/flower.bmp">
+<img src="./imgs/funflower.bmp">
+<br> <img src="./imgs/opmcrop.bmp">
+<img src="./imgs/opmrotate.bmp">
