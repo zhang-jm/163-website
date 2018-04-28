@@ -127,10 +127,13 @@ pixel.
 <br> <img src="./imgs/checkerboard.bmp">
 <br> scaled to 300x300 (minimize)
 <br> from left to right: nearest neighbor, hat, mitchell
-<br> - as you can see, our mitchell function did not work as expected. we implemented
+<br> - Nearest neighbor simply samples the pixel that is the nearest to what is mapped in the original image.
+<br> - For hat and mitchel, we apply a 2d continous filter constructed from multiplying two 1d filters 
+( x and y). Each pixel is the result of combining the weight of nearby pixels.
+<br> - As you can see, our mitchell function did not work as expected. We implemented
 mitchell by using the same method as hat, except we replaced the hat function with 
-the mitchell function. we also accounted for the differences in width between
-hat and mitchell. however, the image generated is not the intended result and 
+the mitchell function. We also accounted for the differences in width between
+hat and mitchell. However, the image generated is not the intended result and 
 we don't know why.
 <br><img src="./imgs/checkerboard3000.bmp">
 <img src="./imgs/checkerboard3001.bmp">
