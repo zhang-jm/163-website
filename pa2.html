@@ -12,9 +12,9 @@ vertices. After we have these 2, we are able to calculate the normals of each ve
 <br> - L: switch lighting between normal coloring/white default lighting
 
 <p> <img src="./imgs/pa2/bunny.png">
-<img src="./imgs/pa2/bunnynorm.png">
-<img src="./imgs/pa2/elephant.png">
-<img src="./imgs/pa2/heptoroid.png">
+<img src="./imgs/pa2/bunnynorm.PNG">
+<img src="./imgs/pa2/elephant.PNG">
+<img src="./imgs/pa2/heptoroid.PNG">
 
 
 <p> <b> 3.2 mesh connectivity data structure </b> <br>
@@ -36,25 +36,25 @@ vertices. After we have these 2, we are able to calculate the normals of each ve
 <p> <b> 3.3 mesh decimation </b><br>
 
 <p> <b>testpatch.off Edgecollapse 0 1 </b>
-<br> <img src="./imgs/pa2/3_2a.png">
-<img src="./imgs/pa2/3_2b.png">
+<br> <img src="./imgs/pa2/3_2a.PNG">
+<img src="./imgs/pa2/3_2b.PNG">
 <p> - As you can see, we were able to collapse 0 and 1 while removing the fin triangles.
 
 
 <p> <b>plane.off Edgecollapse 11 23 </b><br>	
-<br> <img src="./imgs/pa2/3_2c.png">
-<img src="./imgs/pa2/3_2d.png">
+<br> <img src="./imgs/pa2/3_2c.PNG">
+<img src="./imgs/pa2/3_2d.PNG">
 <p> - The first image shows vertex 11 and 23 being collapsed using the midpoint as the result of the merged point.
 <br> - The second image merges vertex 23 into vertex 11 while keeping the position at vertex 11.
 
 <p> <b> 3.4 quadratic simplification </b> <br>
 <br> original bunny wireframe
-<br> <img src="./imgs/pa2/bunnywire.png">
+<br> <img src="./imgs/pa2/bunnywire.PNG">
 <br> bunny, after running quadratic simplify many times
-<br> <img src="./imgs/pa2/bunnywire2.png">
-<img src="./imgs/pa2/bunnywire3.png">
-<img src="./imgs/pa2/bunnywire4.png">
-<img src="./imgs/pa2/bunnywire5.png">
+<br> <img src="./imgs/pa2/bunnywire2.PNG">
+<img src="./imgs/pa2/bunnywire3.PNG">
+<img src="./imgs/pa2/bunnywire4.PNG">
+<img src="./imgs/pa2/bunnywire5.PNG">
 <br> To see another example, you can look at our video in part 3.5.
 
 <p> To implement quadratic simplification, we basically implemented the 4 steps on the writeup. First, we created an Edge struct that stores the IDs of the 2 vertices it connects, as well as its cost. To get the cost, we computed the Q matrices in order to get the squared error. Then, we sorted the edges by putting all valid edges into a set sorted by cost, so we can quickly get the first item of the set which is the edge with the lowest cost. Once we get the edge, we calculate the contracted vertex as the midpoint between the 2 vertices in the edge. Then, we call our edge collapse method on those 2 vertices. After that edge is collapsed, we create new Edge objects based off of the edges that were formed during the edge collapse and recalculate the edge costs of all edges.
