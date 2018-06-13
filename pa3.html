@@ -1,11 +1,72 @@
-﻿<!DOCTYPE html>
+﻿<h3> CSE 163 Final Project </h3>
+<p>
+    <b> Overview </b><br>
+    For the final project, we have implemented these features: <br>
+    - Shadow mapping <br>
+    - Environment mapping <br>
+    - Environment mapping with Phong Shading (Add on) <br>
+    - SSAO (Add on) <br>
+    <br >
+    Additionally, we have updated or camera controls to use WASD keybinds and mouse controls for standard FPS-style camera control
+</p>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
 
-</body>
-</html>
+<p>
+  <b> Shadow Mapping </b><br>
+  Essentially, in order to implement shadow mapping, we needed to first render the entire scene from the perspective of the light direction
+  looking down towards our plane. Using an orthographic projection, we can simulate a directional light  perspective to capture a depth map
+  and store that into a texture for later reference. When rendering the actual scene, we look up each position in the scene and convert it into
+  coordinates in the shadow map texture. By comparing the depth of the current position and the highest mapped position in the shadow map, we
+  are able to determine whether or not to cast a shadow at that point. <br><br>
+
+  <img src="./imgs/pa3/bunny_shadows.png"> <br>
+  bunny with basic shadow mapping <br><br>
+
+  We also used Poisson disk sampling in order to approximate soft shadows. <br><br>
+
+  <img src="./imgs/pa3/bunny_soft_shadows.png"> <br>
+  bunny with softer shadows <br><br>
+</p>
+
+<p>
+  <b> SSAO </b><br>
+  SSAO is a technique to approximate ambient occlusion, which is the amount of ambient light a point is exposed to. For example, the inside of a tube is more
+  occluded and therefore darker than the outside of a tube. A less noticeable example is that the corners and edges of a room are darker than the rest of the
+  room. How we implemented SSAO is that for each point, we take multiple samples in a half sphere around that point. We then compare the original point's depth value with
+  the depth value of each of the samples. The more samples with a higher depth value, the more occluded we assume that point to be. <br> <br>
+
+  In order to implement SSAO, there are four steps that we go through: <br><br>
+  1. Render Geometry: We render the scene normally, but store information about the positions, normals, and colors of each point onto 3 separate textures.<br><br>
+  2. Calculate SSAO: Using a half-sphere kernel of random samples we generate beforehand, we get the position of each sample relative to each point that we are checking. We
+  then check each position's z-value and compare with the original point to get the fraction of samples that have a higher depth value than that point. We set that point's occlusion
+  factor, with 0 being full occlusion and 1 being no occlusion. Then, we save the occlusion values for each point to another texture.<br><br>
+  3. Blur the SSAO occlusion values: We want to smooth out the SSAO occlusion values to make the shading look more realistic. To do this, we average the values in a small box around each point
+  on the SSAO texture to get the average occlusion value for that point. <br><br>
+  4. Render the scene with SSAO: We render a final texture to the screen that contains the scene in its original colors plus the SSAO shading such that the parts that have ambient occlusion
+  are rendered darker than before. <br><br>
+
+  <img src="./imgs/pa3/bunny_ssao_no_blur.png"> <img src="./imgs/pa3/bunny_ssao_blur.png"> <br>
+  left -- ssao occlusion values without blur; right -- ssao occlusion values with blur <br><br>
+
+  the video below shows the differences in the scene between rendering with and without ssao<br>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/SUfCK3RlQcc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><br><br>
+
+</p>
+
+
+<p>
+  <b> Environment Mapping </b><br>
+  We first created the skybox, by loading in 6 different skybox textures. Using these textures, we can render environment reflections onto
+  mesh objects by calculating the reflection between the normal of the fragment positions and the direction the camera is looking in. Using
+  the reflection vector, we can get the rgb value of the skybox cube at that position, creating a completely reflective object.<br> <br>
+
+  <img src="./imgs/pa3/bunny_env_reflect.png"> <br>
+  bunny with basic environment mapping <br><br>
+
+  We calculated Phong shading through setting both material and light ambient/diffuse/specular values given a directional light. Using the same
+  directional light from shadow mapping. We calculate the end result of the fragment color and multiply that by the environment mapped color.<br> <br>
+
+  <img src="./imgs/pa3/bunny_env_phong.png"> <br>
+  bunny with environment map + phong shading <br><br>
+
+</p>
